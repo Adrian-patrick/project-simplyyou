@@ -16,5 +16,3 @@ Class labels are stored in `mobilenet/label_map.json`.
 ### 🚀 Deployment
 - Self-contained Gradio app (`gradio_app.py`)
 - Ready to deploy to [Hugging Face Spaces](https://huggingface.co/spaces)
-
-### 📂 Folder Structure
