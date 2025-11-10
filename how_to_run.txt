@@ -1,0 +1,16 @@
+move to directory
+
+cd C:\Users\adria\Desktop\CODING\simplyyou
+
+build docker container
+
+docker build -t simplyyou-api .
+
+run container
+
+
+docker run --rm -p 8000:8000 -e ART_DIR=/app/mobilenet ^
+-v "C:\Users\adria\Desktop\CODING\simplyyou\mobilenet":/app/mobilenet:ro ^
+simplyyou-api
+
+

@@ -1,0 +1,26 @@
+class,kcal_100g,protein_g_100g,fat_g_100g,carbs_g_100g,images,notes
+biryani,170,3.5,6,26,150,generic biryani (veg/chicken mixed avg)
+burger,250,12,11,25,150,plain veg/chicken burger baseline
+chai,60,1.7,2.5,8,150,milk tea with sugar per ~100 ml
+chapati,300,9,6,50,150,roti/chapati cooked
+cholebhature,260,6.5,12,30,150,combined chole+bhature average
+dahl,110,6,3,15,150,cooked dal (lentil curry)
+dhokla,160,6,5,23,150,khaman dhokla
+dosa,184,3.9,6,28,150,plain dosa
+friedrice,165,3.5,5,27,150,veg fried rice
+gulabjamun,350,4,12,60,150,syrup soaked sweet
+idli,146,5,2,28,150,steamed idli
+jalebi,420,2,15,70,150,sugar syrup jalebi
+kaathirolls,240,9,9,30,150,veg/chicken kathi roll baseline
+kadaipaneer,200,8,14,6,150,curry gravy average
+kulfi,230,5,12,25,133,malai kulfi baseline
+momos,180,7,6,24,150,steamed momos mixed filling
+naan,310,9,7,53,150,plain naan
+paanipuri,270,6,9,40,150,includes puri+filling average
+pakode,350,8,20,32,150,onion/veg pakora fried
+pavbhaji,150,3,6,22,150,without pav butter topping
+pizza,270,11,11,33,150,regular cheese pizza slice avg per 100 g
+poha,130,2.7,3.5,23,150,kanda poha
+rolls,235,8,8,32,150,generic veg/chicken roll
+samosa,300,6,17,30,150,veg samosa
+vadapav,290,6,12,39,150,batata vada pav baseline
