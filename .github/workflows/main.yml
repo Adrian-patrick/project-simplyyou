@@ -1,71 +1,39 @@
-name: Sync to Hugging Face Space
+name: 🚀 Deploy to Hugging Face Space
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
+    branches:
+      - main  # triggers on pushes to main
 
 jobs:
-  sync-to-hf:
-    name: Build & Deploy to Hugging Face
+  deploy:
     runs-on: ubuntu-latest
-    env:
-      HF_USER: adrian99           # <-- your HF username
-      SPACE_NAME: Simplyyou       # <-- your Space name
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true               # include Git LFS-tracked model/assets
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: Optional sanity check (requirements + gradio import)
-        if: hashFiles('requirements.txt') != ''
+      - name: Install Hugging Face CLI
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
-          python - << 'PY'
-import importlib
-try:
-    importlib.import_module("gradio")
-    print("✅ Gradio import OK")
-except Exception as e:
-    print("⚠️ Gradio not installed or import failed:", e)
-PY
+          pip install huggingface-hub
 
-      - name: Configure Git for push
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git lfs install
-
-      - name: Push current main to Space
+      - name: Push to Hugging Face Space
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}   # create this in GitHub repo settings
+          HF_TOKEN: ${{ secrets.HF }}
         run: |
-          if [ -z "$HF_TOKEN" ]; then
-            echo "❌ HF_TOKEN secret is missing"; exit 1
-          fi
-          SPACE_REMOTE="https://${HF_USER}:${HF_TOKEN}@huggingface.co/spaces/${HF_USER}/${SPACE_NAME}"
-          # Push HEAD to Space main; --force keeps Space in sync with GitHub
-          git push --force "$SPACE_REMOTE" HEAD:main
-          echo "🚀 Pushed to Space. Build will start automatically."
-
-      # Optional: ping the Space status after a short delay (non-blocking)
-      - name: Check Space status (optional)
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          sleep 5
-          curl -s -H "Authorization: Bearer $HF_TOKEN" \
-            "https://huggingface.co/api/spaces/${{ env.HF_USER }}/${{ env.SPACE_NAME }}" \
-            | sed -E 's/\",\"/\",\\n\"/g' || true
+          echo "🚀 Deploying to Hugging Face Space adrian99/Simplyyou"
+          huggingface-cli login --token $HF_TOKEN
+          
+          # Push current directory to your Space repo
+          huggingface-cli repo sync-to-hub \
+            --repo-type space \
+            --repo-id adrian99/Simplyyou \
+            --clean
+          
+          echo "✅ Successfully pushed and deployed to Hugging Face Space"
