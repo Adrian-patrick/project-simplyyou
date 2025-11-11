@@ -70,4 +70,3 @@ docker run --rm -p 8000:8000 ^
 
 **Author:** [Adrian Patrick](https://github.com/Adrian-patrick)  
 🧠 *ML Engineer | AI Developer*  
-Licensed under **MIT License**
