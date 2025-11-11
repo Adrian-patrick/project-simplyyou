@@ -1,0 +1,48 @@
+name: 🚀 Deploy to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & Deploy to Hugging Face
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify gradio_app.py Exists
+        run: |
+          if [ ! -f "gradio_app.py" ]; then
+            echo "❌ gradio_app.py not found!"
+            exit 1
+          fi
+          echo "✅ Found gradio_app.py"
+
+      - name: Quick Test
+        run: |
+          python -c "import gradio; print('✅ Gradio is working')"
+
+      - name: Trigger Hugging Face Space Rebuild
+        env:
+          HF_TOKEN: ${{ secrets.HF }}
+        run: |
+          echo "🚀 Triggering rebuild for your Hugging Face Space..."
+          curl -X POST \
+            -H "Authorization: Bearer $HF_TOKEN" \
+            https://huggingface.co/api/spaces/adrian99/Simplyyou/rebuild \
+            && echo "✅ Space rebuild triggered successfully!" \
+            || echo "⚠️ Failed to trigger rebuild. Check token permissions."
