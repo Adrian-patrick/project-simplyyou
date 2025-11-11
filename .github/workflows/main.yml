@@ -28,10 +28,10 @@ jobs:
           HF_TOKEN: ${{ secrets.HF }}
         run: |
           echo "🚀 Deploying to Hugging Face Space adrian99/Simplyyou"
-          huggingface-cli login --token $HF_TOKEN
+          python -m huggingface_hub login --token $HF_TOKEN
           
           # Push current directory to your Space repo
-          huggingface-cli repo sync-to-hub \
+          python -m huggingface_hub repo sync-to-hub \
             --repo-type space \
             --repo-id adrian99/Simplyyou \
             --clean
