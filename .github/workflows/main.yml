@@ -3,7 +3,7 @@ name: 🚀 Deploy to Hugging Face Space
 on:
   push:
     branches:
-      - main  # triggers on pushes to main
+      - main  # Deploy on every push to main branch
 
 jobs:
   deploy:
@@ -18,22 +18,27 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Hugging Face CLI
+      - name: Install Hugging Face CLI (latest)
         run: |
           python -m pip install --upgrade pip
-          pip install huggingface-hub
+          pip install "huggingface_hub[cli]>=0.24.0"
 
-      - name: Push to Hugging Face Space
+      - name: Login to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF }}
         run: |
-          echo "🚀 Deploying to Hugging Face Space adrian99/Simplyyou"
-          python -m huggingface_hub login --token $HF_TOKEN
-          
-          # Push current directory to your Space repo
-          python -m huggingface_hub repo sync-to-hub \
+          echo "🔑 Logging in to Hugging Face..."
+          huggingface-cli login --token $HF_TOKEN
+
+      - name: Sync to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF }}
+        run: |
+          echo "🚀 Deploying to Hugging Face Space adrian99/Simplyyou ..."
+          huggingface-cli upload . / \
+            --repo adrian99/Simplyyou \
             --repo-type space \
-            --repo-id adrian99/Simplyyou \
-            --clean
-          
-          echo "✅ Successfully pushed and deployed to Hugging Face Space"
+            --token $HF_TOKEN \
+            --delete
+
+          echo "✅ Successfully pushed and deployed to Hugging Face Space!"
