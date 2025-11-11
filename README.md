@@ -1,3 +1,12 @@
+---
+title: Simplyou
+emoji: 🍛
+sdk: gradio
+app_file: gradio_app.py
+python_version: 3.11
+---
+
+
 # 🍛 Simplyou – Indian Food Classifier 🇮🇳
 
 A fine-tuned EfficientNet / MobileNet model that classifies 25 popular Indian dishes  
